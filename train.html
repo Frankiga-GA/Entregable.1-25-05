@@ -9,13 +9,16 @@
 
 <body>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
+  <!--//p5.js: para manipular gráficos--->
+ 
   <script src="https://cdn.jsdelivr.net/npm/ml5@0.12.2/dist/ml5.min.js"></script>
-  <script>
+  <!--ml5.js: para usar modelos de aprendizaje automático-->
+ 
+ <script>
     let Trectangulo = [];
-    let acutangulo = [];
+    let acutangulo = [];//Se crean arrays vacíos para almacenar imágenes de cada tipo de triángulo.
     let AcutanguloVolteado = [];
-
-    let clasificador;
+    let clasificador; //será nuestra red neuronal entrenable con ml5.js
 
     function preload() {
       for (let n = 1; n <= 100; n++) {
@@ -26,26 +29,31 @@
 
       }
     }
+    //Aqui cargamos 100 imágenes de cada tipo de triángulo en los arrays correspondientes.
+    //El nombre de los archivos sigue un formato: triangle001.png, triangle002.png, etc.
 
     function setup() {
-      noCanvas();
+      noCanvas(); //Esta opcion nos permite a no dibujar, solo entrenar.
       clasificador = ml5.neuralNetwork({
-        inputs: [48, 48, 4],
-        task: 'imageClassification',
-        debug: true
+        inputs: [48, 48, 4],//imágenes de 48x48 píxeles con 4 canales (RGBA)
+        task: 'imageClassification',//clasificación de imágenes
+        debug: true//Podemos ver el progreso del entrenamiento en consola
       });
       for (let i = 0; i < 100; i++) {
         clasificador.addData({ image: Trectangulo[i] }, { label: "Triángulo Rectángulo" });
         clasificador.addData({ image: acutangulo[i] }, { label: "Triángulo Acutángulo" });
         clasificador.addData({ image: AcutanguloVolteado[i] }, { label: "Triángulo Acutángulo de cabeza" });
       }
-      clasificador.normalizeData();
-      clasificador.train({ epochs: 50 }, onTrainComplete);
+      //Agregamos cada imagen con su etiqueta correspondiente
+      //enseña al modelo qué tipo de imagen corresponde a cada categoría
+      clasificador.normalizeData();//Los datos preparan para que puedan ser procesados correctamente
+      clasificador.train({ epochs: 50 }, onTrainComplete);//comienza el entrenamiento con 50 épocas
     }
 
     function onTrainComplete() {
       console.log("Entrenamiento completado");
       clasificador.save();
+      //Guarda el modelo entrenado localmente como archivo .json
     }
   </script>
 </body>
