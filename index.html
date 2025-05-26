@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clasificador de Dibujos</title>
+  <title>Clasificando con Juan Guerrero</title>
   <style>
     html,
     body {
@@ -37,8 +37,8 @@
 
 <body>
   <main>
-    <div id="result">📥 Cargando modelo...</div>
-    <button id="resetBtn">🧼 Borrar dibujo</button>
+    <div id="result">📥 Cargando</div>
+    <button id="resetBtn">Borrar </button>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
@@ -89,7 +89,7 @@
           return;
         }
         let { label, confidence } = results[0];
-        outputDisplay.html(`🔍 ${label} — Confianza: ${(confidence * 100).toFixed(1)}%`);
+        outputDisplay.html(`${label} — Confianza: ${(confidence * 100).toFixed(1)}%`);
         setTimeout(analyzeDrawing, 500); // analizar cada 0.5s
       });
     }

@@ -20,9 +20,10 @@
     function preload() {
       for (let n = 1; n <= 100; n++) {
         const numStr = n.toString().padStart(3, '0');
-        Trectangulo.push(loadImage(`processing/triangles/data/triangulo_rectangulo_volteado/triangle${numStr}.png`));
+        Trectangulo.push(loadImage(`processing/triangles/data/triangulo_rectangulo/triangle${numStr}.png`));
         acutangulo.push(loadImage(`processing/triangles/data/acutangulo/triangle${numStr}.png`));
-        AcutanguloVolteado.push(loadImage(`processing/triangles/data/acutangulo_invertido/triangle${numStr}.png`));
+        AcutanguloVolteado.push(loadImage(`processing/triangles/data/acutangulo_volteado/triangle${numStr}.png`));
+
       }
     }
 
@@ -34,9 +35,9 @@
         debug: true
       });
       for (let i = 0; i < 100; i++) {
-        clasificador.addData({ image: imgsNormal[i] }, { label: "Triángulo Rectángulo" });
-        clasificador.addData({ image: imgsAcutangulo[i] }, { label: "Triángulo Acutángulo" });
-        clasificador.addData({ image: imgsAcutanguloInvertido[i] }, { label: "Triángulo Acutángulo" });
+        clasificador.addData({ image: Trectangulo[i] }, { label: "Triángulo Rectángulo" });
+        clasificador.addData({ image: acutangulo[i] }, { label: "Triángulo Acutángulo" });
+        clasificador.addData({ image: AcutanguloVolteado[i] }, { label: "Triángulo Acutángulo de cabeza" });
       }
       clasificador.normalizeData();
       clasificador.train({ epochs: 50 }, onTrainComplete);
